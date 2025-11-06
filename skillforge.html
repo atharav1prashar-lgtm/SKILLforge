@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Forge | Forge Your Future</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Tailwind Configuration for custom colors -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'forge-blue': '#1a376a', // Deep Blue
+                        'forge-orange': '#ff5722', // Electric Orange
+                        'forge-light': '#f0f4f8',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        html {
+            scroll-behavior: smooth;
+        }
+        /* Sticky Navigation Bar shadow */
+        .sticky-nav {
+            transition: all 0.3s ease-in-out;
+        }
+        .nav-scrolled {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+        }
+
+        /* Card Hover Effect */
+        .course-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* CTA Button Gradient Hover */
+        .cta-button {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #ff5722, #e53900);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+        .cta-button:hover::after {
+            opacity: 1;
+        }
+        
+        /* Modal Backdrop */
+        .modal-backdrop {
+            background-color: rgba(26, 55, 106, 0.85); /* forge-blue with opacity */
+        }
+    </style>
+</head>
+<body class="font-sans bg-forge-light text-gray-800">
+
+    <!-- Sticky Navigation Bar -->
+    <header id="navbar" class="sticky-nav fixed w-full top-0 z-50 transition duration-300 bg-white/90">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <a href="#hero" class="text-2xl font-extrabold text-forge-blue">Skill <span class="text-forge-orange">Forge</span></a>
+            
+            <!-- Desktop Nav Links -->
+            <div class="hidden md:flex space-x-8 font-medium">
+                <a href="#about" class="hover:text-forge-orange transition duration-200">About</a>
+                <a href="#courses" class="hover:text-forge-orange transition duration-200">Programs & Kits</a>
+                <a href="#testimonials" class="hover:text-forge-orange transition duration-200">Testimonials</a>
+                <a href="#contact" class="hover:text-forge-orange transition duration-200">Contact</a>
+            </div>
+
+            <!-- Mobile Menu Button (Hamburger) -->
+            <button id="mobile-menu-button" class="md:hidden text-forge-blue p-2 rounded-lg hover:bg-gray-100 transition duration-200">
+                <i data-lucide="menu"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Mobile Menu Drawer (Hidden by Default) -->
+    <div id="mobile-menu" class="hidden fixed top-0 left-0 w-full h-full bg-forge-blue/95 z-40 p-6 pt-20 transition-transform duration-300 ease-in-out transform -translate-y-full">
+        <button id="mobile-menu-close" class="absolute top-4 right-4 text-white p-2 rounded-lg hover:bg-white/10 transition duration-200">
+            <i data-lucide="x"></i>
+        </button>
+        <div class="flex flex-col space-y-6 text-xl text-white font-semibold">
+            <a href="#about" class="hover:text-forge-orange transition duration-200" onclick="document.getElementById('mobile-menu').classList.add('hidden');">About</a>
+            <a href="#courses" class="hover:text-forge-orange transition duration-200" onclick="document.getElementById('mobile-menu').classList.add('hidden');">Programs & Kits</a>
+            <a href="#testimonials" class="hover:text-forge-orange transition duration-200" onclick="document.getElementById('mobile-menu').classList.add('hidden');">Testimonials</a>
+            <a href="#contact" class="hover:text-forge-orange transition duration-200" onclick="document.getElementById('mobile-menu').classList.add('hidden');">Contact</a>
+        </div>
+    </div>
+
+    <main class="pt-16">
+
+        <!-- 1. Hero Section -->
+        <section id="hero" class="bg-forge-blue text-white py-24 md:py-32 lg:py-40 flex items-center min-h-screen">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="text-4xl sm:text-5xl lg:text-7xl font-extrabold mb-6 animate-pulse">
+                    Forge Your Future with <span class="text-forge-orange">Skill Forge</span>
+                </h1>
+                <p class="text-xl sm:text-2xl mb-10 max-w-3xl mx-auto opacity-90">
+                    Master new skills, build real projects, and unlock your potential with expert-led courses and DIY Kits.
+                </p>
+                <div class="flex justify-center space-x-4">
+                    <a href="#courses" class="inline-block py-3 px-8 text-lg font-semibold rounded-full bg-gradient-to-r from-forge-orange to-[#e53900] text-white shadow-xl hover:shadow-2xl cta-button">
+                        Start Learning <i data-lucide="book-open" class="w-5 h-5 inline ml-2"></i>
+                    </a>
+                    <a href="#courses" class="inline-block py-3 px-8 text-lg font-semibold rounded-full border border-white text-white shadow-xl hover:bg-white/10 transition duration-300">
+                        Explore Kits <i data-lucide="wrench" class="w-5 h-5 inline ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. About Section -->
+        <section id="about" class="py-20 md:py-28 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col lg:flex-row items-center gap-12">
+                    <!-- Text Content -->
+                    <div class="lg:w-1/2">
+                        <span class="text-sm font-semibold text-forge-orange uppercase tracking-wider">Our Mission</span>
+                        <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mt-2 mb-6">Empowering Learners, Building Careers</h2>
+                        <p class="text-lg text-gray-600 mb-6">
+                            Skill Forge was founded on the belief that access to high-quality, relevant education should be universal. We provide a dynamic, project-based learning environment that not only teaches you the 'what' but also the 'how' and 'why' of in-demand skills.
+                        </p>
+                        <p class="text-lg text-gray-600">
+                            Our carefully curated programs and **hands-on DIY Kits**, designed by industry professionals, ensure you gain practical experience and confidence needed to excel in tomorrow's job market. Join us and transform your aspirations into achievements.
+                        </p>
+                    </div>
+                    <!-- Illustration Placeholder -->
+                    <div class="lg:w-1/2 p-6 bg-forge-light rounded-2xl shadow-lg border border-gray-200">
+                        <div class="w-full h-64 bg-gray-200 rounded-xl flex items-center justify-center text-gray-500 text-lg font-medium">
+                            <i data-lucide="award" class="w-10 h-10 mr-3 text-forge-orange"></i> Modern Illustration Placeholder
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Courses / Programs Section -->
+        <section id="courses" class="py-20 md:py-28 bg-forge-light">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <span class="text-sm font-semibold text-forge-orange uppercase tracking-wider">Explore Programs & Kits</span>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mt-2">Skills for the Modern World</h2>
+                </div>
+
+                <!-- Course Categories Grid (5 items, wraps nicely on MD screens) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
+                    
+                    <!-- Card 1: Web Development -->
+                    <div class="course-card bg-white p-6 rounded-xl shadow-lg border-b-4 border-forge-orange flex flex-col items-center text-center" data-course="Web Development">
+                        <i data-lucide="code" class="w-10 h-10 text-forge-blue mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">Web Development</h3>
+                        <p class="text-gray-600 text-sm mb-4">Build dynamic, responsive websites and applications from scratch.</p>
+                        <button class="view-path-btn w-full py-2 text-forge-orange hover:text-white hover:bg-forge-orange font-medium rounded-lg transition duration-200" data-course-name="Web Development">View Path</button>
+                    </div>
+
+                    <!-- Card 2: Graphic Design -->
+                    <div class="course-card bg-white p-6 rounded-xl shadow-lg border-b-4 border-forge-orange flex flex-col items-center text-center" data-course="Graphic Design">
+                        <i data-lucide="palette" class="w-10 h-10 text-forge-blue mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">Graphic Design</h3>
+                        <p class="text-gray-600 text-sm mb-4">Master design principles, tools, and create stunning visual content.</p>
+                        <button class="view-path-btn w-full py-2 text-forge-orange hover:text-white hover:bg-forge-orange font-medium rounded-lg transition duration-200" data-course-name="Graphic Design">View Path</button>
+                    </div>
+
+                    <!-- Card 3: AI & Data Science -->
+                    <div class="course-card bg-white p-6 rounded-xl shadow-lg border-b-4 border-forge-orange flex flex-col items-center text-center" data-course="AI & Data Science">
+                        <i data-lucide="brain" class="w-10 h-10 text-forge-blue mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">AI & Data Science</h3>
+                        <p class="text-gray-600 text-sm mb-4">Dive into machine learning, data analysis, and predictive modeling.</p>
+                        <button class="view-path-btn w-full py-2 text-forge-orange hover:text-white hover:bg-forge-orange font-medium rounded-lg transition duration-200" data-course-name="AI & Data Science">View Path</button>
+                    </div>
+
+                    <!-- Card 4: Soft Skills -->
+                    <div class="course-card bg-white p-6 rounded-xl shadow-lg border-b-4 border-forge-orange flex flex-col items-center text-center" data-course="Soft Skills">
+                        <i data-lucide="users" class="w-10 h-10 text-forge-blue mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">Soft Skills</h3>
+                        <p class="text-gray-600 text-sm mb-4">Enhance communication, leadership, and professional effectiveness.</p>
+                        <button class="view-path-btn w-full py-2 text-forge-orange hover:text-white hover:bg-forge-orange font-medium rounded-lg transition duration-200" data-course-name="Soft Skills">View Path</button>
+                    </div>
+
+                    <!-- Card 5: DIY Kits & Hardware (NEW) -->
+                    <div class="course-card bg-white p-6 rounded-xl shadow-lg border-b-4 border-forge-orange flex flex-col items-center text-center" data-course="DIY Kits & Hardware">
+                        <i data-lucide="package" class="w-10 h-10 text-forge-blue mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">DIY Kits & Hardware</h3>
+                        <p class="text-gray-600 text-sm mb-4">Hands-on projects in robotics, electronics, and smart devices.</p>
+                        <button class="view-path-btn w-full py-2 text-forge-orange hover:text-white hover:bg-forge-orange font-medium rounded-lg transition duration-200" data-course-name="DIY Kits & Hardware">View Details</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Testimonials Section -->
+        <section id="testimonials" class="py-20 md:py-28 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <span class="text-sm font-semibold text-forge-orange uppercase tracking-wider">Success Stories</span>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mt-2">What Our Learners Say</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    
+                    <!-- Testimonial 1 (Empty for now) -->
+                    <div class="bg-forge-light p-6 rounded-xl shadow-md">
+                        <div class="flex items-center mb-4">
+                            <!-- Placeholder Profile Image -->
+                            <div class="w-12 h-12 bg-gray-400 rounded-full flex items-center justify-center text-white font-bold text-xl mr-4">
+                                <i data-lucide="user" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Student Name A</p>
+                                <p class="text-sm text-gray-600">Placeholder Role</p>
+                            </div>
+                        </div>
+                        <p class="italic text-gray-500 text-center py-6 border border-dashed border-gray-300 rounded-lg">
+                            [Content Pending: A powerful quote about Skill Forge's impact on their career path.]
+                        </p>
+                    </div>
+
+                    <!-- Testimonial 2 (Empty for now) -->
+                    <div class="bg-forge-light p-6 rounded-xl shadow-md">
+                        <div class="flex items-center mb-4">
+                            <!-- Placeholder Profile Image -->
+                            <div class="w-12 h-12 bg-gray-400 rounded-full flex items-center justify-center text-white font-bold text-xl mr-4">
+                                <i data-lucide="user" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Student Name B</p>
+                                <p class="text-sm text-gray-600">Placeholder Role</p>
+                            </div>
+                        </div>
+                        <p class="italic text-gray-500 text-center py-6 border border-dashed border-gray-300 rounded-lg">
+                            [Content Pending: A powerful quote about Skill Forge's impact on their career path.]
+                        </p>
+                    </div>
+
+                    <!-- Testimonial 3 (Empty for now) -->
+                    <div class="bg-forge-light p-6 rounded-xl shadow-md">
+                        <div class="flex items-center mb-4">
+                            <!-- Placeholder Profile Image -->
+                            <div class="w-12 h-12 bg-gray-400 rounded-full flex items-center justify-center text-white font-bold text-xl mr-4">
+                                <i data-lucide="user" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Student Name C</p>
+                                <p class="text-sm text-gray-600">Placeholder Role</p>
+                            </div>
+                        </div>
+                        <p class="italic text-gray-500 text-center py-6 border border-dashed border-gray-300 rounded-lg">
+                            [Content Pending: A powerful quote about Skill Forge's impact on their career path.]
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Contact Section -->
+        <section id="contact" class="py-20 md:py-28 bg-forge-blue text-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <span class="text-sm font-semibold text-forge-orange uppercase tracking-wider">Get in Touch</span>
+                    <h2 class="text-3xl sm:text-4xl font-bold mt-2">Let's Connect and Collaborate</h2>
+                </div>
+
+                <div class="flex flex-col lg:flex-row gap-12 lg:gap-20">
+                    
+                    <!-- Contact Form -->
+                    <div class="lg:w-2/3">
+                        <h3 class="text-2xl font-semibold mb-4 text-forge-orange">Send Us a Message</h3>
+                        <form id="contact-form" class="space-y-4 bg-white p-6 rounded-xl shadow-2xl text-gray-800">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                                <input type="text" id="name" name="name" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-forge-orange focus:border-forge-orange">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                                <input type="email" id="email" name="email" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-forge-orange focus:border-forge-orange">
+                            </div>
+                            <div>
+                                <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+                                <textarea id="message" name="message" rows="4" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-forge-orange focus:border-forge-orange"></textarea>
+                            </div>
+                            <button type="submit" class="w-full py-3 px-6 text-lg font-semibold rounded-lg bg-forge-orange hover:bg-[#e53900] text-white transition duration-300">
+                                Send Inquiry
+                            </button>
+                            <p id="form-message" class="mt-4 text-center font-medium hidden"></p>
+                        </form>
+                    </div>
+
+                    <!-- Contact Info and FAQ (More responses added here) -->
+                    <div class="lg:w-1/3 space-y-8 p-6 lg:p-0">
+                        <h3 class="text-2xl font-semibold mb-4 text-forge-orange">Direct Contact</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <i data-lucide="phone" class="w-6 h-6 text-forge-orange mr-3 mt-1 flex-shrink-0"></i>
+                                <div>
+                                    <p class="font-semibold text-lg">Phone</p>
+                                    <p class="text-gray-300">7973447069</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i data-lucide="instagram" class="w-6 h-6 text-forge-orange mr-3 mt-1 flex-shrink-0"></i>
+                                <div>
+                                    <p class="font-semibold text-lg">Instagram</p>
+                                    <p class="text-gray-300">@skill._forge</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Optional: FAQ/Chatbot Placeholder -->
+                        <div class="bg-forge-orange/10 p-4 rounded-xl shadow-inner border border-forge-orange/50">
+                            <h4 class="font-semibold text-xl mb-3 flex items-center text-forge-orange">
+                                <i data-lucide="message-square" class="w-5 h-5 mr-2"></i> Quick FAQ
+                            </h4>
+                            <div class="space-y-2 text-sm text-gray-200">
+                                <p><span class="font-bold">Q: Are courses self-paced?</span> A: Yes, all our programs are flexible and self-paced.</p>
+                                <p><span class="font-bold">Q: Is there mentorship?</span> A: Premium tiers include 1:1 mentorship sessions.</p>
+                                <p><span class="font-bold">Q: Do DIY kits come with instructions?</span> A: Absolutely! Every kit includes a detailed, step-by-step guide.</p>
+                                <p><span class="font-bold">Q: What skill level is required?</span> A: We offer kits and courses for beginner, intermediate, and advanced learners.</p>
+                                <p><span class="font-bold">Q: Are there corporate training options?</span> A: Yes, please use the contact form for custom corporate training solutions.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Course Details Modal (Interactive Pop-up) -->
+        <div id="course-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center modal-backdrop transition-opacity duration-300" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <div class="bg-white rounded-xl shadow-2xl p-6 w-11/12 max-w-lg mx-4 transform transition-all duration-300 scale-95 opacity-0" id="modal-content">
+                <div class="flex justify-between items-center border-b pb-3 mb-4">
+                    <h3 id="modal-title" class="text-2xl font-bold text-forge-blue">Course/Kit Details</h3>
+                    <button id="modal-close-btn" class="text-gray-400 hover:text-gray-700 transition duration-150">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+                <div id="modal-body" class="text-gray-700 space-y-3">
+                    <p class="text-lg font-medium">This is an interactive modal providing more information about the selected path:</p>
+                    <ul class="list-disc list-inside space-y-1 ml-4 text-sm">
+                        <li>Modules: 10+</li>
+                        <li>Duration: Self-paced (Avg. 60 hours)</li>
+                        <li>Format: Video, Quizzes, and Projects</li>
+                        <li id="kit-info" class="hidden text-forge-orange font-semibold">Includes physical hardware kit shipping!</li>
+                    </ul>
+                    <p class="pt-4 text-center">
+                        <a href="#contact" class="inline-block py-2 px-6 text-base font-semibold rounded-lg bg-forge-orange hover:bg-[#e53900] text-white transition duration-300" id="modal-cta-btn" onclick="document.getElementById('course-modal').classList.add('hidden');">Enroll Now / Order Kit</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- 6. Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-10">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="flex justify-center space-x-6 mb-6">
+                <a href="https://instagram.com/skill._forge" target="_blank" class="text-gray-400 hover:text-forge-orange transition duration-200" aria-label="Instagram">
+                    <i data-lucide="instagram" class="w-6 h-6"></i>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-forge-orange transition duration-200" aria-label="LinkedIn">
+                    <i data-lucide="linkedin" class="w-6 h-6"></i>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-forge-orange transition duration-200" aria-label="Twitter">
+                    <i data-lucide="twitter" class="w-6 h-6"></i>
+                </a>
+            </div>
+            <p class="text-sm">&copy; 2024 Skill Forge. All rights reserved. Forge Your Future.</p>
+            <div class="mt-2 text-xs">
+                <a href="#" class="hover:text-white mx-2">Privacy Policy</a> |
+                <a href="#" class="hover:text-white mx-2">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Interactivity -->
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // 1. Sticky Navigation Bar
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('nav-scrolled');
+            } else {
+                navbar.classList.remove('nav-scrolled');
+            }
+        });
+
+        // 2. Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenuClose = document.getElementById('mobile-menu-close');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.remove('hidden');
+            mobileMenu.classList.remove('-translate-y-full');
+            mobileMenu.classList.add('translate-y-0');
+        });
+
+        mobileMenuClose.addEventListener('click', () => {
+            mobileMenu.classList.add('-translate-y-full');
+            mobileMenu.classList.remove('translate-y-0');
+            // Hide after transition ends (optional, but cleaner)
+            setTimeout(() => { mobileMenu.classList.add('hidden'); }, 300); 
+        });
+        
+        // 3. WhatsApp Form Submission Handling
+        const contactForm = document.getElementById('contact-form');
+        const formMessage = document.getElementById('form-message');
+
+        contactForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            
+            // Basic validation check
+            if (contactForm.checkValidity()) {
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const message = document.getElementById('message').value;
+                
+                // Use the phone number listed on the page (7973447069) with +91 country code
+                const whatsappPhoneNumber = '917973447069'; 
+                
+                // Construct the pre-filled WhatsApp message
+                const whatsappText = encodeURIComponent(
+                    `*New Inquiry from Skill Forge Website*\n\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
+                );
+                
+                // Create the WhatsApp link
+                const whatsappUrl = `https://wa.me/${whatsappPhoneNumber}?text=${whatsappText}`;
+
+                // Provide immediate feedback to the user
+                formMessage.textContent = 'Redirecting to WhatsApp to send your inquiry...';
+                formMessage.classList.remove('hidden', 'text-red-500');
+                formMessage.classList.add('text-forge-blue'); // Use a notification color
+                
+                // Redirect after a brief delay for the message to be seen
+                setTimeout(() => {
+                    window.location.href = whatsappUrl;
+                    
+                    // Optionally reset form after successful redirection
+                    contactForm.reset();
+                    // Hide message again after redirection (or leave it until the user returns)
+                    setTimeout(() => {
+                        formMessage.classList.add('hidden');
+                    }, 5000); 
+                }, 500); 
+
+            } else {
+                // Handle invalid form data
+                formMessage.textContent = 'Please fill out all required fields correctly.';
+                formMessage.classList.remove('hidden', 'text-forge-blue');
+                formMessage.classList.add('text-red-500');
+            }
+        });
+        
+        // 4. Interactive Course Modal Logic
+        const courseModal = document.getElementById('course-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalCloseBtn = document.getElementById('modal-close-btn');
+        const modalContent = document.getElementById('modal-content');
+        const kitInfo = document.getElementById('kit-info');
+        const modalCtaBtn = document.getElementById('modal-cta-btn');
+
+        document.querySelectorAll('.view-path-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const courseName = e.target.getAttribute('data-course-name');
+                
+                // Set Modal Content based on the button clicked
+                modalTitle.textContent = `${courseName} Overview`;
+                
+                // Check if it's the DIY Kits category
+                if (courseName === 'DIY Kits & Hardware') {
+                    kitInfo.classList.remove('hidden');
+                    modalCtaBtn.textContent = 'Order Kit';
+                } else {
+                    kitInfo.classList.add('hidden');
+                    modalCtaBtn.textContent = 'Enroll Now';
+                }
+
+                // Show the modal
+                courseModal.classList.remove('hidden');
+                // Trigger transitions for visual appeal
+                setTimeout(() => {
+                    modalContent.classList.remove('scale-95', 'opacity-0');
+                }, 10);
+            });
+        });
+
+        // Function to close the modal
+        function closeModal() {
+            modalContent.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                courseModal.classList.add('hidden');
+            }, 300); // Wait for transition
+        }
+
+        // Close modal via button
+        modalCloseBtn.addEventListener('click', closeModal);
+
+        // Close modal by clicking outside
+        courseModal.addEventListener('click', (e) => {
+            if (e.target === courseModal) {
+                closeModal();
+            }
+        });
+
+    </script>
+</body>
+</html>
